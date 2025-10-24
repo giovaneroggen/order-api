@@ -1,0 +1,24 @@
+= API Orders
+:toc:
+:snippets: build/generated-snippets
+
+Valid Customers ["customer-1", "customer-2", "customer-3"]
+
+== Order Request
+include::{snippets}/create-order-success/request-fields.adoc[]
+== Order Response
+include::{snippets}/create-order-success/response-fields.adoc[]
+
+== Create Order - Success
+
+include::{snippets}/create-order-success/curl-request.adoc[]
+
+== Create Order - Invalid Customer
+
+include::{snippets}/create-order-success/curl-request.adoc[]
+include::{snippets}/create-order-error-invalid-customer/http-response.adoc[]
+
+== Create Order - Empty Items
+
+include::{snippets}/create-order-success/curl-request.adoc[]
+include::{snippets}/create-order-error-invalid-customer/http-response.adoc[]

@@ -1,3 +1,5 @@
+import org.asciidoctor.gradle.jvm.AsciidoctorTask
+
 plugins {
 	kotlin("jvm") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
@@ -45,13 +47,24 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+    outputs.dir(project.extra["snippetsDir"]!!)
 }
 
-tasks.test {
-	outputs.dir(project.extra["snippetsDir"]!!)
+
+tasks.named<AsciidoctorTask>("asciidoctor") {
+    dependsOn(tasks.test) // garante que snippets existam antes
+
+    inputs.dir(project.extra["snippetsDir"]!!)
+    attributes["snippets"] = project.extra["snippetsDir"]
+
+    // Corrige o nome e caminho do diretório-fonte
+    sources {
+        include("index.adoc")
+    }
+    setSourceDir(file("src/docs/asciidoc4"))
+    setOutputDir(file("build/docs/asciidoc"))
 }
 
-tasks.asciidoctor {
-	inputs.dir(project.extra["snippetsDir"]!!)
-	dependsOn(tasks.test)
+tasks.build {
+    dependsOn(tasks.asciidoctor) // Garante que o build gere a doc também
 }
